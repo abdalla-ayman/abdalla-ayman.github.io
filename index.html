@@ -3,948 +3,780 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Abdalla Ayman — Full Stack Engineer</title>
+<title>Abdalla Ayman — Full Stack &amp; DevOps Engineer</title>
+<meta name="description" content="Abdalla Ayman — full stack engineer with 3+ years of production experience. Web portals, React Native apps, APIs, CI/CD, Docker, Linux servers, SSO and payment integrations.">
+<meta property="og:title" content="Abdalla Ayman — Full Stack & DevOps Engineer">
+<meta property="og:description" content="I build the product and keep it running.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0E0F0C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230E0F0C'/%3E%3Crect x='12' y='8' width='8' height='16' fill='%23C8F560'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Noto+Kufi+Arabic:wght@500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #101216;
-    --bg2: #13151a;
-    --card: #1b1e25;
-    --border: #23262e;
-    --border2: #2c303a;
-    --text: #d4d8e0;
-    --text-dim: #9aa0b0;
-    --text-muted: #7f8494;
-    --text-comment: #5a6072;
-    --text-bright: #e8ecf4;
-    --blue: #61afef;
-    --green: #98c379;
-    --purple: #c678dd;
-    --yellow: #e5c07b;
-    --term-green: #7dff9b;
-    --term-bg: #0a0f0a;
-    --term-border: #1d2e1d;
-    --term-bar: #0f1a0f;
+    --bg: #0E0F0C;
+    --surface: #121310;
+    --surface-2: #1A1B17;
+    --pill: #1D1F19;
+    --selected: #1A1C15;
+    --line: #23251F;
+    --border: #2E302A;
+    --border-strong: #3A3C35;
+    --border-hover: #55574F;
+    --text: #ECEAE3;
+    --text-2: #C9C7BF;
+    --text-3: #B4B2AA;
+    --muted: #8F8D85;
+    --accent: #C8F560;
+    --on-accent: #0E0F0C;
+    --blue: #7FB3FF;
+    --red: #FF8A7A;
+    --display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+    --sans: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    --arabic: 'Noto Kufi Arabic', 'Segoe UI', Tahoma, sans-serif;
   }
 
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; overflow-x: clip; }
 
   body {
-    background: var(--bg);
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(rgba(236,234,227,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(236,234,227,.035) 1px, transparent 1px);
+    background-size: 56px 56px;
     color: var(--text);
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.6;
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
   }
 
-  ::selection { background: var(--blue); color: var(--bg); }
-
+  ::selection { background: var(--accent); color: var(--on-accent); }
   a { color: inherit; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  .mono { font-family: var(--mono); }
+  .accent { color: var(--accent); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
   /* ===== KEYFRAMES ===== */
   @keyframes blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }
-  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
-  @keyframes glowPulse { 0%,100%{box-shadow:0 0 24px rgba(97,175,239,.15)} 50%{box-shadow:0 0 48px rgba(97,175,239,.3)} }
+  @keyframes rise { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
+  @keyframes travel { from{left:0%} to{left:calc(100% - 10px)} }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(200,245,96,.45)} 50%{box-shadow:0 0 0 8px rgba(200,245,96,0)} }
+  @keyframes swap { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
 
-  /* ===== NAV ===== */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 18px 6vw;
-    background: rgba(16,18,22,.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
+  .cursor { display: inline-block; background: var(--accent); animation: blink 1s steps(1) infinite; }
+  .rise { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
+  .d1{animation-delay:.08s}.d2{animation-delay:.18s}.d3{animation-delay:.3s}.d4{animation-delay:.42s}
+  .swap { animation: swap .35s ease both; }
 
-  .nav-logo {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text-bright);
-    text-decoration: none;
-  }
-  .nav-logo span { color: var(--blue); }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
 
-  .nav-links {
-    display: flex;
-    gap: 26px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    align-items: center;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color .2s;
-  }
-  .nav-links a:hover { color: var(--blue); }
-  .nav-links .cv-link { color: var(--green); }
-  .nav-links .cv-link:hover { color: var(--term-green); }
-  .nav-links .hire-btn {
-    padding: 8px 18px;
-    background: var(--blue);
-    color: var(--bg);
-    border-radius: 6px;
-    font-weight: 600;
-    transition: background .2s;
-  }
-  .nav-links .hire-btn:hover { background: #7fc0f5; color: var(--bg); }
-
-  /* mobile nav toggle */
-  .nav-toggle {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 4px;
-  }
-  .nav-toggle span {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: var(--text-bright);
-    border-radius: 2px;
-    transition: .3s;
-  }
-
-  /* ===== SECTIONS ===== */
-  .section { border-top: 1px solid var(--border); }
-  .section.alt { background: var(--bg2); }
-  .container { max-width: 1100px; margin: 0 auto; padding: 80px 6vw; }
-
-  .section-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: var(--purple);
-    margin-bottom: 14px;
-  }
-  .section-tag .num { color: var(--text-comment); }
-
+  /* ===== LAYOUT ===== */
+  .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+  section.block { padding: 72px 0; }
+  .eyebrow { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  h1, h2, h3 { font-family: var(--display); color: var(--text); }
   h2 {
-    font-size: 34px;
-    font-weight: 700;
-    color: var(--text-bright);
-    letter-spacing: -0.02em;
-  }
-
-  /* ===== HERO ===== */
-  #hero {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 110px 6vw 90px;
-    animation: fadeUp .7s ease both;
-  }
-
-  .hero-avail {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
-    color: var(--green);
-    margin-bottom: 20px;
-  }
-
-  .hero-prefix {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 15px;
-    color: var(--text-muted);
-    margin-bottom: 10px;
-  }
-  .hero-prefix .kw { color: #c678dd; }
-  .hero-prefix .var { color: var(--yellow); }
-
-  h1 {
-    font-size: clamp(44px, 7vw, 84px);
-    font-weight: 700;
-    color: var(--text-bright);
+    font-weight: 800;
+    font-size: clamp(34px, 4.5vw, 56px);
     line-height: 1.02;
     letter-spacing: -0.03em;
-    margin: 10px 0 18px;
+    text-wrap: balance;
   }
-
-  .typed-wrap {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(17px, 2.2vw, 24px);
-    color: var(--green);
-    min-height: 1.5em;
-  }
-
-  .cursor {
-    display: inline-block;
-    width: 11px;
-    height: 1.15em;
-    background: var(--blue);
-    vertical-align: -3px;
-    margin-left: 3px;
-    animation: blink 1.1s step-start infinite;
-  }
-
-  .hero-suffix {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 15px;
-    color: var(--text-muted);
-    margin-top: 18px;
-  }
-
-  .hero-desc {
-    font-size: 18px;
-    line-height: 1.7;
-    color: var(--text-dim);
-    max-width: 640px;
-    margin: 30px 0 38px;
-  }
-
-  .btn-row {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-  }
-
-  .btn-primary {
-    font-size: 15px;
-    font-weight: 600;
-    padding: 14px 30px;
-    background: var(--blue);
-    color: var(--bg);
-    border-radius: 8px;
-    text-decoration: none;
-    animation: glowPulse 3s ease-in-out infinite;
-    transition: background .2s, transform .2s;
-  }
-  .btn-primary:hover { background: #7fc0f5; transform: translateY(-2px); }
-
-  .btn-outline {
-    font-size: 15px;
-    font-weight: 500;
-    padding: 14px 30px;
-    border: 1px solid var(--border2);
-    color: var(--text);
-    border-radius: 8px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: border-color .2s, color .2s, transform .2s;
-  }
-  .btn-outline.green:hover { border-color: var(--green); color: var(--green); }
-  .btn-outline.blue:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-2px); }
-
-  .stats {
-    display: flex;
-    margin-top: 64px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    max-width: 720px;
-  }
-
-  .stat {
-    flex: 1;
-    padding: 22px 28px;
-    border-right: 1px solid var(--border);
-  }
-  .stat:last-child { border-right: none; }
-  .stat-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 30px;
-    font-weight: 700;
-    color: var(--text-bright);
-  }
-  .stat-label {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-top: 4px;
-  }
-
-  /* ===== ABOUT ===== */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 60px;
-    align-items: start;
-  }
-
-  .about-text {
-    font-size: 16.5px;
-    line-height: 1.8;
-    color: var(--text-dim);
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-
-  .about-comment {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13.5px;
-    color: var(--text-comment);
-  }
-
-  /* ===== EXPERIENCE ===== */
-  .exp-list {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    margin-top: 44px;
-  }
-
-  .exp-card {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: 28px;
-    padding: 28px 32px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    transition: border-color .2s, transform .2s;
-  }
-  .exp-card:hover { border-color: var(--blue); transform: translateX(6px); }
-
-  .exp-period {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: var(--blue);
-  }
-  .exp-location {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--text-comment);
-    margin-top: 6px;
-  }
-
-  .exp-header {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .exp-role {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--text-bright);
-  }
-  .exp-company {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
-    color: var(--green);
-  }
-
-  .exp-points {
-    margin: 12px 0 0;
-    padding-left: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-  }
-  .exp-points li {
-    font-size: 14.5px;
-    line-height: 1.6;
-    color: var(--text-dim);
-  }
-
-  .tag-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 16px;
-  }
+  .sec-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 36px; }
+  .sec-head > div { display: flex; flex-direction: column; gap: 10px; }
+  .sec-note { max-width: 380px; color: var(--text-3); font-size: 15px; }
 
   .tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11.5px;
-    padding: 5px 11px;
-    background: var(--bg);
-    border: 1px solid var(--border2);
-    border-radius: 5px;
-    color: var(--yellow);
+    font-family: var(--mono); font-size: 12px;
+    padding: 5px 10px; border-radius: 6px;
+    border: 1px solid var(--border); color: var(--text-2);
   }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
 
-  /* ===== SKILLS ===== */
-  .skill-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 16px;
-    margin-top: 44px;
-  }
-
-  .skill-card {
-    padding: 24px 26px;
-    background: var(--card);
+  .card {
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    transition: border-color .2s;
+    border-radius: 14px;
   }
-  .skill-card:hover { border-color: var(--green); }
+  .lift { transition: transform .25s ease, border-color .25s ease, background .25s ease; }
+  .lift:hover { transform: translateY(-4px); border-color: var(--border-hover); }
 
-  .skill-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--yellow);
-    margin-bottom: 14px;
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 48px; padding: 0 22px;
+    border-radius: 10px; text-decoration: none;
+    font-weight: 600; font-size: 16px;
+    transition: transform .2s ease, background .2s ease, border-color .2s ease;
   }
+  .btn:hover { transform: translateY(-2px); }
+  .btn svg { flex: none; }
+  .btn-primary { background: var(--accent); color: var(--on-accent); }
+  .btn-primary:hover { background: #D6FA82; }
+  .btn-outline { border: 1px solid var(--border-strong); color: var(--text); }
+  .btn-outline:hover { border-color: var(--accent); }
 
-  .skill-items {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+  /* ===== HEADER ===== */
+  header.top {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(14,15,12,.82);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
   }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 14px; padding-bottom: 14px; }
+  .logo {
+    text-decoration: none; font-family: var(--mono); font-size: 15px; font-weight: 700;
+    display: flex; align-items: center; gap: 8px; min-height: 44px;
+  }
+  .logo .cursor { width: 9px; height: 18px; }
+  .nav-links { display: flex; align-items: center; gap: 22px; list-style: none; font-family: var(--mono); font-size: 14px; }
+  .nav-links a { color: var(--text-3); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: #fff; }
+  .nav-links .cv { color: var(--accent); }
+  .nav-links .hire {
+    display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px;
+    background: var(--accent); color: var(--on-accent); border-radius: 8px; font-weight: 700;
+  }
+  .nav-links .hire:hover { color: var(--on-accent); background: #D6FA82; }
+  .nav-toggle {
+    display: none; width: 44px; height: 44px; border-radius: 10px;
+    background: transparent; border: 1px solid var(--border); cursor: pointer;
+    align-items: center; justify-content: center; flex-direction: column; gap: 5px;
+  }
+  .nav-toggle span { display: block; width: 18px; height: 2px; background: var(--text); border-radius: 2px; transition: .3s; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  .skill-chip {
-    font-size: 13.5px;
-    padding: 6px 12px;
-    background: var(--bg);
-    border-radius: 6px;
-    color: var(--text);
+  /* ===== HERO ===== */
+  .hero { display: flex; flex-wrap: wrap; gap: 56px; align-items: center; padding-top: 96px; padding-bottom: 80px; }
+  .hero-copy { flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 28px; }
+  .status { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-family: var(--mono); font-size: 13px; color: var(--text-3); }
+  .pill { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; }
+  .live { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s ease-in-out infinite; }
+  h1 {
+    font-weight: 800; font-size: clamp(44px, 7vw, 92px);
+    line-height: .98; letter-spacing: -0.035em; text-wrap: balance;
   }
+  h1 .dim { color: var(--muted); }
+  .hero-desc { max-width: 560px; font-size: 19px; color: var(--text-2); text-wrap: pretty; }
+  .hero-desc strong { color: #fff; font-weight: 600; }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 12px; }
+  .arabic { font-family: var(--arabic); font-size: 15px; color: var(--muted); align-self: flex-start; }
 
   /* ===== TERMINAL ===== */
-  .term-intro p {
-    font-size: 15px;
-    color: var(--text-muted);
-    margin: 0 0 32px;
-  }
-  .term-intro span {
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--green);
-  }
-
   .terminal {
-    background: var(--term-bg);
-    border: 1px solid var(--term-border);
-    border-radius: 12px;
-    overflow: hidden;
-    cursor: text;
-    box-shadow: 0 8px 40px rgba(0,0,0,.4);
+    flex: 1 1 400px; min-width: 0;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+    box-shadow: 0 30px 80px rgba(0,0,0,.55); overflow: hidden;
   }
-
   .term-bar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 16px;
-    background: var(--term-bar);
-    border-bottom: 1px solid var(--term-border);
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 12px 16px; background: #171814; border-bottom: 1px solid var(--line);
   }
-
-  .dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
+  .term-dots { display: flex; gap: 8px; }
+  .term-dots span { width: 11px; height: 11px; border-radius: 50%; background: var(--border-strong); }
+  .term-title { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .term-clear {
+    font-family: var(--mono); font-size: 12px; color: var(--text-3);
+    background: transparent; border: 1px solid var(--border); border-radius: 6px;
+    padding: 4px 10px; cursor: pointer;
   }
-  .dot-red { background: #ff5f56; }
-  .dot-yellow { background: #ffbd2e; }
-  .dot-green { background: #27c93f; }
-
-  .term-title {
-    margin-left: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: #4a6b4a;
-  }
-
+  .term-clear:hover { color: #fff; border-color: var(--border-strong); }
   .term-body {
-    padding: 20px 24px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13.5px;
-    line-height: 1.8;
-    min-height: 220px;
-    max-height: 340px;
-    overflow-y: auto;
+    padding: 18px 18px 12px; height: 300px; overflow-y: auto; cursor: text;
+    font-family: var(--mono); font-size: 13.5px; line-height: 1.65;
+    display: flex; flex-direction: column; gap: 14px;
+    scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent;
   }
-
-  .term-line { white-space: pre-wrap; }
-
-  .term-input-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .term-prompt { color: #4a6b4a; }
-
+  .entry { display: flex; flex-direction: column; gap: 4px; }
+  .prompt-arrow { color: var(--accent); }
+  .prompt-path { color: var(--blue); }
+  .entry .cmd-text { color: #fff; }
+  .entry .out { white-space: pre-wrap; color: var(--text-2); overflow-wrap: anywhere; }
+  .entry .out.err { color: var(--red); }
+  .input-row { display: flex; align-items: center; gap: 8px; }
   .term-input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--term-green);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13.5px;
-    caret-color: var(--term-green);
+    flex: 1; min-width: 0; background: transparent; border: none; outline: none;
+    color: #fff; font-family: var(--mono); font-size: 13.5px; caret-color: var(--accent);
   }
+  .term-foot { padding: 12px 16px 16px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
+  .term-foot-label { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--mono); font-size: 13px; min-height: 36px; padding: 0 12px;
+    border-radius: 8px; border: 1px solid var(--border); background: var(--surface-2);
+    color: var(--text-2); cursor: pointer; transition: background .2s, color .2s;
+  }
+  .chip:hover { background: #24261F; color: #fff; }
+
+  /* ===== PIPELINE ===== */
+  .track { position: relative; height: 2px; background: var(--border); margin: 0 4px 36px; }
+  .packet {
+    position: absolute; top: -4px; width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 18px var(--accent);
+    animation: travel 3.6s linear infinite;
+  }
+  .stages { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); gap: 12px; }
+  .stage {
+    text-align: left; cursor: pointer; display: flex; flex-direction: column; gap: 10px;
+    padding: 18px; min-height: 132px; border-radius: 12px;
+    border: 1px solid var(--border); background: var(--surface);
+  }
+  .stage .n { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .stage .name { font-family: var(--display); font-size: 24px; font-weight: 600; line-height: 1.1; }
+  .stage .tools { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .stage[aria-pressed="true"] { border-color: var(--accent); background: var(--selected); }
+  .stage[aria-pressed="true"]:hover { transform: none; }
+  .stage[aria-pressed="true"] .n { color: var(--accent); }
+  .stage[aria-pressed="true"] .tools { color: var(--text-2); }
+  .stage-log {
+    display: flex; flex-wrap: wrap; gap: 18px 32px; align-items: baseline;
+    margin-top: 12px; padding: 24px 26px; border-radius: 12px;
+    border: 1px dashed var(--border-strong); background: rgba(18,19,16,.7);
+  }
+  .stage-log .path { font-family: var(--mono); font-size: 13px; color: var(--accent); white-space: nowrap; }
+  .stage-log p { flex: 1 1 420px; font-size: 18px; text-wrap: pretty; }
+
+  /* ===== WORK ===== */
+  .work { display: flex; flex-wrap: wrap; gap: 24px; align-items: stretch; }
+  .jobs { flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+  .job-tab {
+    text-align: left; cursor: pointer; display: flex; gap: 16px; align-items: flex-start;
+    padding: 18px 20px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface);
+  }
+  .job-tab .dot { margin-top: 7px; flex: none; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--border-hover); }
+  .job-tab .meta { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .job-tab .dates { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .job-tab .company { font-family: var(--display); font-size: 22px; font-weight: 600; line-height: 1.15; }
+  .job-tab .role { font-size: 14px; color: var(--text-3); }
+  .job-tab[aria-selected="true"] { border-color: var(--accent); background: var(--selected); }
+  .job-tab[aria-selected="true"]:hover { transform: none; }
+  .job-tab[aria-selected="true"] .dot { background: var(--accent); border-color: var(--accent); }
+  .job-tab[aria-selected="true"] .dates { color: var(--accent); }
+  .job-tab[aria-selected="true"] .role { color: var(--text-2); }
+  .job-panel { flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 22px; padding: 32px; }
+  .job-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: baseline; }
+  .job-head h3 { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .job-head .where { color: var(--text-2); margin-top: 4px; }
+  .badge { font-family: var(--mono); font-size: 13px; color: var(--on-accent); background: var(--accent); border-radius: 6px; padding: 4px 10px; white-space: nowrap; }
+  .points { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .points li { display: flex; gap: 14px; align-items: flex-start; color: #DAD8D0; text-wrap: pretty; }
+  .points li::before { content: "+"; font-family: var(--mono); color: var(--accent); flex: none; }
+  .job-panel .tags { margin-top: auto; padding-top: 8px; }
+
+  /* ===== PROJECTS ===== */
+  .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 16px; }
+  .project { display: flex; flex-direction: column; gap: 16px; padding: 28px; }
+  .project .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .project .folder { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  .project .cat { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  .project h3 { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .project h3 .ar { font-family: var(--arabic); font-size: 20px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+  .project p { color: var(--text-2); font-size: 16px; text-wrap: pretty; }
+  .project .tags { margin-top: auto; }
+  .project .link {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
+    font-family: var(--mono); font-size: 14px; color: var(--accent); text-decoration: none; align-self: flex-start;
+  }
+  .project .link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ===== SKILLS ===== */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .filter {
+    cursor: pointer; min-height: 40px; padding: 0 16px; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--surface); color: var(--text-2);
+    font-family: var(--mono); font-size: 13px; transition: background .2s, color .2s, border-color .2s;
+  }
+  .filter:hover { background: #24261F; color: #fff; }
+  .filter[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 700; }
+  .groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 14px; }
+  .group { display: flex; flex-direction: column; gap: 14px; padding: 22px; border-radius: 12px; }
+  .group .label { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .group .items { display: flex; flex-wrap: wrap; gap: 8px; }
+  .group .items span { font-size: 15px; font-weight: 500; padding: 7px 12px; border-radius: 8px; background: var(--pill); }
+
+  /* ===== ABOUT ===== */
+  .about { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 16px; padding: 24px 0 72px; }
+  .about .card { display: flex; flex-direction: column; gap: 10px; padding: 28px; }
+  .about .label { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .about .big { font-family: var(--display); font-size: 26px; font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; }
+  .about .sub { color: var(--text-2); }
 
   /* ===== CONTACT ===== */
-  #contact .container {
-    padding: 100px 6vw 60px;
-    text-align: center;
-  }
-
-  .contact-email {
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(15px, 2.4vw, 22px);
-    font-weight: 600;
-    padding: 18px 36px;
-    background: var(--blue);
-    color: var(--bg);
-    border-radius: 10px;
-    text-decoration: none;
-    transition: background .2s, transform .2s;
-  }
-  .contact-email:hover { background: #7fc0f5; transform: translateY(-2px); }
-
-  .contact-desc {
-    font-size: 16.5px;
-    color: var(--text-dim);
-    max-width: 480px;
-    margin: 0 auto 36px;
-    line-height: 1.7;
-  }
-
-  .contact-links {
-    display: flex;
-    justify-content: center;
-    gap: 28px;
-    margin-top: 44px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: var(--text-muted);
-    flex-wrap: wrap;
-  }
-  .contact-links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color .2s;
-  }
-  .contact-links a:hover { color: var(--blue); }
-  .contact-links a.cv-dl { color: var(--green); }
-  .contact-links a.cv-dl:hover { color: var(--term-green); }
-
+  .contact { border-top: 1px solid var(--line); background: var(--surface); }
+  .contact .container { padding-top: 96px; padding-bottom: 48px; display: flex; flex-direction: column; gap: 32px; }
+  .contact h2 { font-size: clamp(40px, 6.5vw, 88px); line-height: .98; letter-spacing: -0.035em; }
+  .contact .btn { min-height: 52px; padding: 0 24px; }
+  .contact .email { font-size: 17px; max-width: 100%; overflow-wrap: anywhere; }
+  .contact-meta { display: flex; flex-wrap: wrap; gap: 10px 28px; font-family: var(--mono); font-size: 14px; color: var(--text-3); }
+  .contact-meta a { text-decoration: none; }
+  .contact-meta a:hover { color: #fff; }
   .footer {
-    margin-top: 70px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: #3c414d;
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px;
+    padding-top: 40px; border-top: 1px solid var(--line);
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
   }
 
   /* ===== RESPONSIVE ===== */
-  @media (max-width: 768px) {
-    .nav-toggle { display: flex; }
-
+  @media (max-width: 860px) {
+    .nav-toggle { display: inline-flex; }
     .nav-links {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 260px;
-      height: 100vh;
-      background: var(--bg2);
-      border-left: 1px solid var(--border);
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 80px 32px 32px;
-      gap: 22px;
-      transition: right .3s;
-      z-index: 100;
+      position: fixed; top: 0; right: 0; height: 100vh; height: 100dvh; width: min(280px, 85vw);
+      flex-direction: column; align-items: flex-start; gap: 6px;
+      padding: 88px 28px 28px; background: var(--surface); border-left: 1px solid var(--line);
+      transform: translateX(100%); visibility: hidden;
+      transition: transform .3s ease, visibility .3s;
+      z-index: 40;
     }
-    .nav-links.open { right: 0; }
+    .nav-links.open { transform: none; visibility: visible; }
+    .nav-links a { display: inline-flex; align-items: center; min-height: 44px; font-size: 16px; }
+    .nav-links li:last-child { margin-top: 12px; }
+    .nav-toggle { position: relative; z-index: 60; }
+    .hero { padding-top: 56px; gap: 40px; }
+  }
+  @media (max-width: 520px) {
+    .btn-row .btn { flex: 1 1 100%; justify-content: center; }
+    .job-panel { padding: 24px; }
+    .stage-log { padding: 20px; }
+    .stage-log p { font-size: 16px; }
+  }
 
-    .about-grid { grid-template-columns: 1fr; gap: 32px; }
-
-    .exp-card {
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-    .exp-card:hover { transform: none; }
-
-    .stats { flex-direction: column; }
-    .stat { border-right: none; border-bottom: 1px solid var(--border); }
-    .stat:last-child { border-bottom: none; }
-
-    .btn-row { flex-direction: column; }
-    .btn-primary, .btn-outline { text-align: center; justify-content: center; }
-
-    .contact-links { gap: 16px; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+    .packet { left: 50%; }
   }
 </style>
 </head>
 <body>
 
-<!-- ===== NAV ===== -->
-<nav>
-  <a href="#" class="nav-logo">abdalla<span>.</span>dev</a>
-  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-    <span></span><span></span><span></span>
-  </button>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#about">/about</a></li>
-    <li><a href="#experience">/experience</a></li>
-    <li><a href="#skills">/skills</a></li>
-    <li><a href="#terminal">/terminal</a></li>
-    <li><a href="./Abdalla_Ayman_CV.pdf" download class="cv-link">↓ cv</a></li>
-    <li><a href="#contact" class="hire-btn">hire me</a></li>
-  </ul>
-</nav>
+<!-- ===== HEADER ===== -->
+<header class="top">
+  <nav class="container nav" aria-label="Main">
+    <a href="#top" class="logo"><span class="accent">abdalla</span><span style="color:var(--muted)">@prod:~$</span><span class="cursor" aria-hidden="true"></span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#pipeline">./pipeline</a></li>
+      <li><a href="#work">./work</a></li>
+      <li><a href="#projects">./projects</a></li>
+      <li><a href="#skills">./skills</a></li>
+      <li><a href="./Abdalla_Ayman_CV.pdf" download class="cv">↓ cv</a></li>
+      <li><a href="#contact" class="hire">hire me</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
 
 <!-- ===== HERO ===== -->
-<section id="hero">
-  <div class="hero-avail">● available for remote roles</div>
-  <div class="hero-prefix"><span class="kw">const</span> <span class="var">engineer</span> = {</div>
-  <h1>Abdalla Ayman</h1>
-  <div class="typed-wrap">"<span id="typedText"></span>"<span class="cursor"></span></div>
-  <div class="hero-suffix">}</div>
-  <p class="hero-desc">3+ years designing and shipping scalable web applications, RESTful APIs and e-service platforms — from database schema to CI/CD pipeline to production Nginx config.</p>
-  <div class="btn-row">
-    <a href="mailto:abdallaaymanshandi3@gmail.com" class="btn-primary">Get in touch →</a>
-    <a href="./Abdalla_Ayman_CV.pdf" download class="btn-outline green"><span style="font-family:'JetBrains Mono',monospace">↓</span> Download CV</a>
-    <a href="https://github.com/abdalla-ayman" target="_blank" rel="noopener" class="btn-outline blue">GitHub ↗</a>
-    <a href="https://www.linkedin.com/in/abdalla-ayman-0252891b5/" target="_blank" rel="noopener" class="btn-outline blue">LinkedIn ↗</a>
+<section class="container hero">
+  <div class="hero-copy">
+    <div class="status rise">
+      <span class="pill"><span class="live" aria-hidden="true"></span>Open to new roles &amp; projects</span>
+      <span>Giza, Egypt · Remote</span>
+    </div>
+    <h1 class="rise d1">I build the product <span class="dim">and</span> keep it <span class="accent">running.</span></h1>
+    <p class="hero-desc rise d2">I'm <strong>Abdalla Ayman</strong>, a full stack engineer with 3+ years of production experience. I build web portals, React Native apps and the APIs behind them, and I own the release: CI/CD, Docker, Linux servers, SSO and payment integrations.</p>
+    <div class="btn-row rise d3">
+      <a class="btn btn-primary" href="mailto:abdallaaymanshandi3@gmail.com">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        Get in touch
+      </a>
+      <a class="btn btn-outline" href="./Abdalla_Ayman_CV.pdf" download>
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg>
+        Download CV
+      </a>
+      <a class="btn btn-outline" href="https://github.com/abdalla-ayman" target="_blank" rel="noopener">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+        GitHub
+      </a>
+      <a class="btn btn-outline" href="https://www.linkedin.com/in/abdalla-ayman-0252891b5/" target="_blank" rel="noopener">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 11v5M8 8v.01M12 16v-5m0 2a2 2 0 0 1 4 0v3"/></svg>
+        LinkedIn
+      </a>
+    </div>
+    <p class="arabic rise d4" lang="ar" dir="rtl">عبدالله أيمن · مهندس برمجيات متكامل</p>
   </div>
-  <div class="stats">
-    <div class="stat"><div class="stat-num">3+</div><div class="stat-label">years experience</div></div>
-    <div class="stat"><div class="stat-num">3</div><div class="stat-label">production platforms</div></div>
-    <div class="stat"><div class="stat-num">∞</div><div class="stat-label">uptime obsession</div></div>
-  </div>
-</section>
 
-<!-- ===== ABOUT ===== -->
-<section id="about" class="section">
-  <div class="container">
-    <div class="about-grid">
-      <div>
-        <div class="section-tag"><span class="num">// 01</span> — about</div>
-        <h2>Backend depth,<br>full-stack range.</h2>
+  <!-- TERMINAL -->
+  <div class="terminal rise d2" id="terminal">
+    <div class="term-bar">
+      <div class="term-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+      <span class="term-title">abdalla — zsh</span>
+      <button type="button" class="term-clear" id="termClear">clear</button>
+    </div>
+    <div class="term-body" id="termBody" aria-live="polite">
+      <div class="input-row" id="inputRow">
+        <span class="prompt-arrow" aria-hidden="true">➜</span><span class="prompt-path" aria-hidden="true">~</span>
+        <label for="termInput" class="sr-only">Terminal command</label>
+        <input class="term-input" id="termInput" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="type 'help'">
       </div>
-      <div class="about-text">
-        <p>I build the whole thing: Node.js/NestJS services, React &amp; Next.js frontends, PostgreSQL schemas, payment-gateway integrations — then automate the delivery with GitHub Actions and run it on Ubuntu behind Nginx.</p>
-        <p>Lately I've integrated AI-assisted workflows (Copilot, LLM-based review tooling) into my teams' process — faster feature delivery, tighter code reviews, fewer bugs shipped.</p>
-        <p class="about-comment">// B.Sc. Information Technology — University of Khartoum</p>
-      </div>
+    </div>
+    <div class="term-foot">
+      <span class="term-foot-label">Run a command</span>
+      <div class="chips" id="chips"></div>
     </div>
   </div>
 </section>
 
-<!-- ===== EXPERIENCE ===== -->
-<section id="experience" class="section alt">
+<!-- ===== PIPELINE ===== -->
+<section class="block reveal" id="pipeline">
   <div class="container">
-    <div class="section-tag"><span class="num">// 02</span> — experience</div>
-    <h2>Where I've shipped.</h2>
-    <div class="exp-list">
-
-      <div class="exp-card">
-        <div>
-          <div class="exp-period">Nov 2025 — now</div>
-          <div class="exp-location">Remote</div>
-        </div>
-        <div>
-          <div class="exp-header">
-            <span class="exp-role">Full Stack Developer</span>
-            <span class="exp-company">@ Qast</span>
-          </div>
-          <ul class="exp-points">
-            <li>Backend &amp; frontend services with NestJS, Express, Next.js and Tailwind CSS.</li>
-            <li>Integrated AI-assisted workflows (Copilot, LLM tooling) — faster delivery, fewer bugs.</li>
-            <li>Designed and maintained RESTful APIs consumed by web clients.</li>
-          </ul>
-          <div class="tag-row">
-            <span class="tag">NestJS</span>
-            <span class="tag">Next.js</span>
-            <span class="tag">Tailwind</span>
-            <span class="tag">AI tooling</span>
-          </div>
-        </div>
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">01 / how I ship</span>
+        <h2>From commit to production</h2>
       </div>
+      <p class="sec-note">Click a stage to see where I've done it.</p>
+    </div>
+    <div class="track" aria-hidden="true"><span class="packet"></span></div>
+    <div class="stages" id="stages" role="group" aria-label="Delivery pipeline stages"></div>
+    <div class="stage-log">
+      <span class="path" id="stagePath">$ cat stage/code.log</span>
+      <p id="stageDetail" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
 
-      <div class="exp-card">
-        <div>
-          <div class="exp-period">Dec 2023 — Aug 2025</div>
-          <div class="exp-location">Riyadh · Remote</div>
-        </div>
-        <div>
-          <div class="exp-header">
-            <span class="exp-role">Backend / DevOps Engineer</span>
-            <span class="exp-company">@ Bunyan</span>
-          </div>
-          <ul class="exp-points">
-            <li>Led backend development of a project-management + e-commerce platform.</li>
-            <li>Built CI/CD pipelines with GitHub Actions for automated builds and deployments.</li>
-            <li>Configured Ubuntu production servers with Nginx as web server and reverse proxy.</li>
-          </ul>
-          <div class="tag-row">
-            <span class="tag">Node.js</span>
-            <span class="tag">PostgreSQL</span>
-            <span class="tag">GitHub Actions</span>
-            <span class="tag">Nginx</span>
-          </div>
-        </div>
+<!-- ===== WORK ===== -->
+<section class="block reveal" id="work">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">02 / git log --career</span>
+        <h2>Where I've shipped</h2>
       </div>
+    </div>
+    <div class="work">
+      <div class="jobs" id="jobs" role="tablist" aria-label="Work history" aria-orientation="vertical"></div>
+      <article class="card job-panel" id="jobPanel" role="tabpanel" tabindex="0"></article>
+    </div>
+  </div>
+</section>
 
-      <div class="exp-card">
-        <div>
-          <div class="exp-period">Jul 2022 — Jul 2023</div>
-          <div class="exp-location">Riyadh · Remote</div>
-        </div>
-        <div>
-          <div class="exp-header">
-            <span class="exp-role">Full Stack Engineer</span>
-            <span class="exp-company">@ Lux Rent</span>
-          </div>
-          <ul class="exp-points">
-            <li>Maintained and improved a car rental platform (Node.js, SQL, Vue.js, EJS).</li>
-            <li>Integrated a secure, PCI-compliant payment gateway.</li>
-            <li>Optimized templates and SQL queries — faster page loads, better reliability.</li>
-          </ul>
-          <div class="tag-row">
-            <span class="tag">Node.js</span>
-            <span class="tag">Vue.js</span>
-            <span class="tag">SQL</span>
-            <span class="tag">Payments</span>
-          </div>
-        </div>
+<!-- ===== PROJECTS ===== -->
+<section class="block reveal" id="projects">
+  <div class="container">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">03 / ls projects/</span>
+        <h2>Things I've built &amp; run</h2>
       </div>
-
+    </div>
+    <div class="projects">
+      <article class="card project lift">
+        <div class="top"><span class="folder">enjaz-tech/</span><span class="cat">Founder</span></div>
+        <h3>ENJAZ Tech Services</h3>
+        <p>A studio helping small businesses and startups go digital: websites, mobile apps, API and system integrations, workflow automation, and rescue &amp; repair of broken projects. I own requirements, specs, delivery and post-launch support.</p>
+        <div class="tags"><span class="tag">Web</span><span class="tag">Mobile</span><span class="tag">Integrations</span><span class="tag">Automation</span></div>
+        <a class="link" href="https://enjaz-tech.net" target="_blank" rel="noopener">enjaz-tech.net
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+        </a>
+      </article>
+      <article class="card project lift">
+        <div class="top"><span class="folder">raqeem/</span><span class="cat">Healthcare</span></div>
+        <h3>Raqeem <span class="ar" lang="ar">رقيم</span></h3>
+        <p>A receipts application for the Sudanese Police Hospitals, issuing and managing receipts across hospitals and replacing a manual billing process.</p>
+        <div class="tags"><span class="tag">Billing</span><span class="tag">Digitisation</span><span class="tag">Arabic / RTL</span></div>
+      </article>
+      <article class="card project lift">
+        <div class="top"><span class="folder">nexa-pharmacy/</span><span class="cat">Desktop → SaaS</span></div>
+        <h3>NEXA Pharmacy</h3>
+        <p>Pharmacy management for Windows: POS, inventory and branch transfers, purchasing, finance, VAT and insurance, reports and role-based access. Deployed on-premise today, with a subscription cloud edition on the roadmap.</p>
+        <div class="tags"><span class="tag">POS</span><span class="tag">Inventory</span><span class="tag">RBAC</span><span class="tag">SaaS</span></div>
+      </article>
     </div>
   </div>
 </section>
 
 <!-- ===== SKILLS ===== -->
-<section id="skills" class="section">
+<section class="block reveal" id="skills">
   <div class="container">
-    <div class="section-tag"><span class="num">// 03</span> — stack</div>
-    <h2>Tools of the trade.</h2>
-    <div class="skill-grid">
-
-      <div class="skill-card">
-        <div class="skill-label">languages</div>
-        <div class="skill-items">
-          <span class="skill-chip">TypeScript</span>
-          <span class="skill-chip">JavaScript</span>
-          <span class="skill-chip">SQL</span>
-          <span class="skill-chip">HTML/CSS</span>
-        </div>
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">04 / cat stack.txt</span>
+        <h2>The toolbox</h2>
       </div>
-
-      <div class="skill-card">
-        <div class="skill-label">frameworks</div>
-        <div class="skill-items">
-          <span class="skill-chip">NestJS</span>
-          <span class="skill-chip">Express</span>
-          <span class="skill-chip">React</span>
-          <span class="skill-chip">Next.js</span>
-          <span class="skill-chip">Tailwind</span>
-        </div>
-      </div>
-
-      <div class="skill-card">
-        <div class="skill-label">databases</div>
-        <div class="skill-items">
-          <span class="skill-chip">PostgreSQL</span>
-          <span class="skill-chip">MySQL</span>
-          <span class="skill-chip">MongoDB</span>
-          <span class="skill-chip">Redis</span>
-        </div>
-      </div>
-
-      <div class="skill-card">
-        <div class="skill-label">devops</div>
-        <div class="skill-items">
-          <span class="skill-chip">Docker</span>
-          <span class="skill-chip">GitHub Actions</span>
-          <span class="skill-chip">Nginx</span>
-          <span class="skill-chip">Ubuntu</span>
-        </div>
-      </div>
-
-      <div class="skill-card">
-        <div class="skill-label">integration</div>
-        <div class="skill-items">
-          <span class="skill-chip">REST APIs</span>
-          <span class="skill-chip">Payment gateways</span>
-          <span class="skill-chip">Sequelize</span>
-        </div>
-      </div>
-
-      <div class="skill-card">
-        <div class="skill-label">ai-assisted</div>
-        <div class="skill-items">
-          <span class="skill-chip">Copilot</span>
-          <span class="skill-chip">LLM code review</span>
-          <span class="skill-chip">Agentic workflows</span>
-        </div>
-      </div>
-
     </div>
+    <div class="filters" id="filters" role="group" aria-label="Filter skills"></div>
+    <div class="groups" id="groups"></div>
   </div>
 </section>
 
-<!-- ===== TERMINAL ===== -->
-<section id="terminal" class="section alt">
-  <div class="container">
-    <div class="section-tag"><span class="num">// 04</span> — try me</div>
-    <h2>Interactive terminal.</h2>
-    <div class="term-intro">
-      <p>Type <span>help</span> and hit Enter.</p>
-    </div>
-    <div class="terminal" id="terminalBox">
-      <div class="term-bar">
-        <span class="dot dot-red"></span>
-        <span class="dot dot-yellow"></span>
-        <span class="dot dot-green"></span>
-        <span class="term-title">visitor@abdalla.dev: ~</span>
-      </div>
-      <div class="term-body" id="termBody">
-        <div class="term-line" style="color:#4a6b4a">Welcome! Type 'help' to see available commands.</div>
-        <div class="term-input-row">
-          <span class="term-prompt">$</span>
-          <input class="term-input" id="termInput" spellcheck="false" autocomplete="off">
-        </div>
-      </div>
-    </div>
+<!-- ===== EDUCATION + LANGUAGES ===== -->
+<section class="container about reveal">
+  <div class="card">
+    <span class="label">Education</span>
+    <span class="big">B.Sc. Information Technology</span>
+    <span class="sub">University of Khartoum · <span class="accent">First Class Honours</span></span>
+  </div>
+  <div class="card">
+    <span class="label">Languages</span>
+    <span class="big">Arabic &amp; English</span>
+    <span class="sub">Native Arabic, professional English. I turn stakeholder requirements into technical specs in both.</span>
   </div>
 </section>
+
+</main>
 
 <!-- ===== CONTACT ===== -->
-<section id="contact" class="section">
+<footer class="contact" id="contact">
   <div class="container">
-    <div class="section-tag"><span class="num">// 05</span> — contact</div>
-    <h2 style="font-size:clamp(32px,5vw,54px);letter-spacing:-0.03em;margin-bottom:18px">Let's build something.</h2>
-    <p class="contact-desc">Open to full-time remote roles. I usually reply within a day.</p>
-    <a href="mailto:abdallaaymanshandi3@gmail.com" class="contact-email">abdallaaymanshandi3@gmail.com</a>
-    <div class="contact-links">
+    <span class="eyebrow">05 / ssh abdalla</span>
+    <h2>Have something that needs to ship <span class="accent">and stay up?</span></h2>
+    <div class="btn-row">
+      <a class="btn btn-primary email" href="mailto:abdallaaymanshandi3@gmail.com">abdallaaymanshandi3@gmail.com</a>
+      <a class="btn btn-outline" href="./Abdalla_Ayman_CV.pdf" download>↓ Download CV</a>
+    </div>
+    <div class="contact-meta">
       <a href="https://github.com/abdalla-ayman" target="_blank" rel="noopener">github ↗</a>
       <a href="https://www.linkedin.com/in/abdalla-ayman-0252891b5/" target="_blank" rel="noopener">linkedin ↗</a>
-      <a href="./Abdalla_Ayman_CV.pdf" download class="cv-dl">↓ download cv</a>
-      <span>+20 155 668 1870</span>
-      <span>Giza, Egypt</span>
+      <a href="https://enjaz-tech.net" target="_blank" rel="noopener">enjaz-tech.net ↗</a>
+      <a href="tel:+201556681870">+20 155 668 1870</a>
     </div>
-    <div class="footer">© 2026 Abdalla Ayman — built with care &amp; caffeine</div>
+    <div class="footer">
+      <span>© <span id="year">2026</span> Abdalla Ayman</span>
+      <span>Giza, Egypt · available remote</span>
+    </div>
   </div>
-</section>
+</footer>
 
 <script>
-// ===== TYPEWRITER =====
 (function () {
-  const el = document.getElementById('typedText');
-  const roles = [
-    'Full Stack Engineer',
-    'Backend & DevOps Engineer',
-    'API Architect',
-    'Node.js / NestJS Specialist',
-  ];
-  let idx = 0, pos = 0, deleting = false, pause = null;
+  'use strict';
 
-  function step() {
-    const full = roles[idx % roles.length];
-    if (!deleting) {
-      if (pos < full.length) {
-        el.textContent = full.slice(0, ++pos);
-        setTimeout(step, 70);
-      } else {
-        pause = setTimeout(() => { deleting = true; setTimeout(step, 35); }, 2200);
-      }
-    } else {
-      if (pos > 0) {
-        el.textContent = full.slice(0, --pos);
-        setTimeout(step, 35);
-      } else {
-        deleting = false;
-        idx++;
-        setTimeout(step, 70);
-      }
-    }
-  }
-  step();
-})();
-
-// ===== NAV MOBILE =====
-(function () {
-  const toggle = document.getElementById('navToggle');
-  const links = document.getElementById('navLinks');
-  toggle.addEventListener('click', () => links.classList.toggle('open'));
-  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
-})();
-
-// ===== TERMINAL =====
-(function () {
-  const body = document.getElementById('termBody');
-  const input = document.getElementById('termInput');
-  const box = document.getElementById('terminalBox');
-
-  box.addEventListener('click', () => input.focus());
-
-  const COMMANDS = {
-    help: [
-      ['available commands:', '#c8e6c9'],
-      ['  about        who is abdalla?', '#a5c8a8'],
-      ['  skills       tech stack', '#a5c8a8'],
-      ['  experience   work history', '#a5c8a8'],
-      ['  contact      how to reach me', '#a5c8a8'],
-      ['  hire         the important one', '#a5c8a8'],
-      ['  clear        clear terminal', '#a5c8a8'],
-    ],
-    about: [
-      ['Full Stack Engineer, 3+ years. Node.js, NestJS, React, Next.js, PostgreSQL.', '#c8e6c9'],
-      ['Ships APIs, platforms, CI/CD pipelines and the servers they run on.', '#c8e6c9'],
-    ],
-    skills: [
-      ['TypeScript · Node.js · NestJS · React · Next.js · PostgreSQL · Redis · Docker · GitHub Actions · Nginx', '#c8e6c9'],
-    ],
-    experience: [
-      ['2025→now   Qast      Full Stack Developer', '#c8e6c9'],
-      ['2023→2025  Bunyan    Backend / DevOps Engineer', '#c8e6c9'],
-      ['2022→2023  Lux Rent  Full Stack Engineer', '#c8e6c9'],
-    ],
-    contact: [
-      ['email:  abdallaaymanshandi3@gmail.com', '#7dff9b'],
-      ['github: github.com/abdalla-ayman', '#c8e6c9'],
-      ['phone:  +20 155 668 1870', '#c8e6c9'],
-    ],
-    hire: [
-      ['Excellent choice. 🎯', '#7dff9b'],
-      ['→ abdallaaymanshandi3@gmail.com — usually replies within a day.', '#c8e6c9'],
-    ],
-    sudo: [['Nice try. Permission granted anyway — email me.', '#ffbd2e']],
-    whoami: [['visitor — but abdalla is who you came here for.', '#c8e6c9']],
+  // ===== DATA =====
+  var COMMANDS = {
+    help: 'available commands:\n  whoami         who is abdalla?\n  cat stack.txt  tech stack\n  ls projects/   things I\'ve built\n  experience     work history\n  uptime         years in production\n  contact        how to reach me\n  hire           the important one\n  clear          clear the terminal',
+    whoami: 'Abdalla Ayman: Full Stack Engineer & DevOps\nGiza, Egypt · works remote\nArabic (native) · English (professional)',
+    'cat stack.txt': 'backend   Node.js  NestJS  Express  Spring Boot\nfrontend  React  Next.js  Vue.js  Tailwind\nmobile    React Native\ndata      PostgreSQL  MySQL  MongoDB  Redis\nops       Docker  Nginx  Caddy  GitHub Actions  AWS EC2',
+    'ls projects/': 'enjaz-tech/    raqeem/    nexa-pharmacy/',
+    experience: '2025 → now   Qast      Full Stack Developer\n2023 → 2025  Bunyan    Backend / DevOps Engineer\n2022 → 2023  Lux Rent  Full Stack Engineer',
+    uptime: 'up 3+ years shipping to production (since Jul 2022)',
+    contact: 'email   abdallaaymanshandi3@gmail.com\ngithub  github.com/abdalla-ayman\nphone   +20 155 668 1870',
+    hire: 'Excellent choice.\n→ abdallaaymanshandi3@gmail.com: I usually reply within a day.',
+    sudo: 'Nice try. Permission granted anyway: email me.'
   };
+  var ALIASES = { skills: 'cat stack.txt', stack: 'cat stack.txt', projects: 'ls projects/', ls: 'ls projects/', about: 'whoami', 'ls projects': 'ls projects/' };
+  var CHIPS = ['whoami', 'cat stack.txt', 'ls projects/', 'uptime', 'contact'];
 
-  function appendLine(text, color) {
-    const inputRow = body.querySelector('.term-input-row');
-    const div = document.createElement('div');
-    div.className = 'term-line';
-    div.style.color = color || '#c8e6c9';
-    div.textContent = text;
-    body.insertBefore(div, inputRow);
+  var STAGES = [
+    { name: 'Code', slug: 'code', tools: 'TypeScript · NestJS · Next.js', detail: 'Backend and frontend services in NestJS, Express.js, Next.js and Tailwind, with REST APIs consumed by web clients and internal platforms like HR and a device management console.' },
+    { name: 'Integrate', slug: 'ci', tools: 'GitHub Actions', detail: 'Built and owned CI/CD pipelines in GitHub Actions for automated builds, releases and deployments, from requirements to production.' },
+    { name: 'Ship', slug: 'ship', tools: 'Docker · Nginx · Caddy', detail: 'Containerised services on Ubuntu production servers behind Nginx or Caddy as reverse proxy, kept available and secured with SSL/TLS.' },
+    { name: 'Secure', slug: 'auth', tools: 'Keycloak · OIDC · Payments', detail: 'Centralised SSO with Keycloak federated to Microsoft Entra ID, giving one Microsoft 365 login across Qast apps. Earlier, a secure online payment gateway for a car rental platform.' },
+    { name: 'Observe', slug: 'observe', tools: 'Prometheus · Grafana', detail: 'Prometheus and Grafana monitoring on production services for availability and faster troubleshooting.' }
+  ];
+
+  var JOBS = [
+    { company: 'Qast', role: 'Full Stack Developer', place: 'Remote', dates: 'Nov 2025 — now',
+      points: [
+        'Implemented centralised Single Sign-On with Keycloak federated to Microsoft Entra ID, enabling Microsoft 365 login across Qast applications (OAuth 2.0 / OIDC), deployed with Docker behind Caddy.',
+        'Built backend and frontend services with NestJS, Express.js, Next.js and Tailwind CSS; designed REST APIs for web clients and internal platforms (HR, device management console).',
+        'Deployed and operated containerised services on Linux behind Nginx, with Prometheus/Grafana monitoring.',
+        'Introduced AI-assisted workflows (Claude Code, GitHub Copilot) in an Agile team to speed up delivery and reduce bugs.'
+      ],
+      tags: ['Keycloak', 'NestJS', 'Next.js', 'Docker', 'Grafana'] },
+    { company: 'Bunyan', role: 'Backend / DevOps Engineer', place: 'Riyadh, KSA · Remote', dates: 'Dec 2023 — Aug 2025',
+      points: [
+        'Led backend development of a project management and e-commerce platform, from requirements to production.',
+        'Designed and maintained scalable REST APIs with Node.js, Express and PostgreSQL.',
+        'Built and owned CI/CD pipelines in GitHub Actions for automated builds, releases and deployments.',
+        'Ran Ubuntu production servers with Nginx as web server and reverse proxy, secured with SSL/TLS.'
+      ],
+      tags: ['Node.js', 'PostgreSQL', 'GitHub Actions', 'Nginx'] },
+    { company: 'Lux Rent', role: 'Full Stack Engineer', place: 'Riyadh, KSA · Remote', dates: 'Jul 2022 — Jul 2023',
+      points: [
+        'Integrated a secure online payment gateway into a customer-facing car rental platform.',
+        'Maintained and extended the platform with Node.js, MySQL, Vue.js and EJS, including rentals, cart and order management in the admin dashboard.'
+      ],
+      tags: ['Payments', 'Node.js', 'MySQL', 'Vue.js'] }
+  ];
+
+  var GROUPS = [
+    { id: 'lang', label: 'Languages', items: ['JavaScript', 'TypeScript', 'Java', 'SQL', 'HTML', 'CSS'] },
+    { id: 'web', label: 'Backend & Frontend', items: ['Node.js', 'NestJS', 'Express.js', 'Spring Boot', 'React.js', 'Next.js', 'Vue.js', 'Tailwind CSS'] },
+    { id: 'mobile', label: 'Mobile', items: ['React Native'] },
+    { id: 'api', label: 'API & Integration', items: ['REST APIs', 'Payment Gateways', 'Keycloak', 'OAuth 2.0 / OIDC'] },
+    { id: 'data', label: 'Databases', items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Sequelize'] },
+    { id: 'ops', label: 'DevOps & Ops', items: ['GitHub Actions', 'Docker', 'Nginx', 'Caddy', 'AWS EC2', 'Prometheus', 'Grafana', 'Linux', 'Windows'] },
+    { id: 'proc', label: 'Process & Tools', items: ['Agile / Scrum', 'Jira', 'Technical docs', 'Claude Code', 'GitHub Copilot'] }
+  ];
+
+  // ===== HELPERS =====
+  function el(tag, attrs, children) {
+    var n = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      if (k === 'text') n.textContent = attrs[k];
+      else if (k === 'class') n.className = attrs[k];
+      else n.setAttribute(k, attrs[k]);
+    }
+    (children || []).forEach(function (c) { if (c) n.appendChild(c); });
+    return n;
   }
+  function restart(node, cls) { node.classList.remove(cls); void node.offsetWidth; node.classList.add(cls); }
 
-  function runCommand(raw) {
-    const cmd = raw.trim().toLowerCase();
-    appendLine('$ ' + raw, '#7dff9b');
-    if (cmd === 'clear') {
-      Array.from(body.querySelectorAll('.term-line')).forEach(el => el.remove());
-      input.value = '';
-      return;
-    }
-    if (cmd === '') { input.value = ''; return; }
-    const out = COMMANDS[cmd];
-    if (out) {
-      out.forEach(([text, color]) => appendLine(text, color));
-    } else {
-      appendLine(`command not found: ${cmd} — try 'help'`, '#ff5f56');
-    }
-    input.value = '';
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ===== MOBILE NAV =====
+  var toggle = document.getElementById('navToggle');
+  var links = document.getElementById('navLinks');
+  function setMenu(open) {
+    links.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  toggle.addEventListener('click', function () { setMenu(!links.classList.contains('open')); });
+  links.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+  links.addEventListener('keydown', function (e) { if (e.key === 'Escape') { setMenu(false); toggle.focus(); } });
+
+  // ===== TERMINAL =====
+  var body = document.getElementById('termBody');
+  var inputRow = document.getElementById('inputRow');
+  var input = document.getElementById('termInput');
+  var history = [], hIndex = -1;
+
+  function addEntry(cmd, out, isErr) {
+    var line = el('div', null, [
+      el('span', { class: 'prompt-arrow', text: '➜ ' }),
+      el('span', { class: 'prompt-path', text: '~ ' }),
+      el('span', { class: 'cmd-text', text: cmd })
+    ]);
+    var entry = el('div', { class: 'entry' }, [line, out ? el('div', { class: 'out' + (isErr ? ' err' : ''), text: out }) : null]);
+    body.insertBefore(entry, inputRow);
     body.scrollTop = body.scrollHeight;
   }
+  function clearTerm() { body.querySelectorAll('.entry').forEach(function (n) { n.remove(); }); }
+  function run(raw) {
+    var cmd = raw.trim().replace(/\s+/g, ' ');
+    var key = cmd.toLowerCase();
+    if (!key) return;
+    history.push(cmd); hIndex = history.length;
+    if (key === 'clear') { clearTerm(); return; }
+    key = ALIASES[key] || key;
+    if (COMMANDS[key]) addEntry(cmd, COMMANDS[key]);
+    else addEntry(cmd, 'command not found: ' + cmd + ': try \'help\'', true);
+  }
 
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Enter') runCommand(input.value);
+  CHIPS.forEach(function (c) {
+    var b = el('button', { type: 'button', class: 'chip', text: c });
+    b.addEventListener('click', function () { run(c); });
+    document.getElementById('chips').appendChild(b);
   });
+  document.getElementById('termClear').addEventListener('click', function () { clearTerm(); input.focus(); });
+  body.addEventListener('click', function () { if (!window.getSelection().toString()) input.focus({ preventScroll: true }); });
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { run(input.value); input.value = ''; }
+    else if (e.key === 'ArrowUp' && history.length) { e.preventDefault(); hIndex = Math.max(0, hIndex - 1); input.value = history[hIndex]; }
+    else if (e.key === 'ArrowDown' && history.length) { e.preventDefault(); hIndex = Math.min(history.length, hIndex + 1); input.value = history[hIndex] || ''; }
+  });
+  addEntry('whoami', COMMANDS.whoami);
+
+  // ===== PIPELINE =====
+  var stagesEl = document.getElementById('stages');
+  var stagePath = document.getElementById('stagePath');
+  var stageDetail = document.getElementById('stageDetail');
+  var stageBtns = STAGES.map(function (s, i) {
+    var b = el('button', { type: 'button', class: 'stage lift', 'aria-pressed': 'false' }, [
+      el('span', { class: 'n', text: 'stage 0' + (i + 1) }),
+      el('span', { class: 'name', text: s.name }),
+      el('span', { class: 'tools', text: s.tools })
+    ]);
+    b.addEventListener('click', function () { pickStage(i); });
+    stagesEl.appendChild(b);
+    return b;
+  });
+  function pickStage(i) {
+    stageBtns.forEach(function (b, j) { b.setAttribute('aria-pressed', String(i === j)); });
+    stagePath.textContent = '$ cat stage/' + STAGES[i].slug + '.log';
+    stageDetail.textContent = STAGES[i].detail;
+    restart(stageDetail, 'swap');
+  }
+  pickStage(0);
+
+  // ===== WORK (tabs) =====
+  var jobsEl = document.getElementById('jobs');
+  var panel = document.getElementById('jobPanel');
+  var tabs = JOBS.map(function (j, i) {
+    var t = el('button', { type: 'button', class: 'job-tab lift', role: 'tab', id: 'tab-' + i, 'aria-controls': 'jobPanel', 'aria-selected': 'false', tabindex: '-1' }, [
+      el('span', { class: 'dot', 'aria-hidden': 'true' }),
+      el('span', { class: 'meta' }, [
+        el('span', { class: 'dates', text: j.dates }),
+        el('span', { class: 'company', text: j.company }),
+        el('span', { class: 'role', text: j.role })
+      ])
+    ]);
+    t.addEventListener('click', function () { pickJob(i); });
+    t.addEventListener('keydown', function (e) {
+      var next = null;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') next = (i + 1) % JOBS.length;
+      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') next = (i - 1 + JOBS.length) % JOBS.length;
+      if (e.key === 'Home') next = 0;
+      if (e.key === 'End') next = JOBS.length - 1;
+      if (next !== null) { e.preventDefault(); pickJob(next); tabs[next].focus(); }
+    });
+    jobsEl.appendChild(t);
+    return t;
+  });
+  function pickJob(i) {
+    var j = JOBS[i];
+    tabs.forEach(function (t, k) { t.setAttribute('aria-selected', String(i === k)); t.tabIndex = i === k ? 0 : -1; });
+    panel.setAttribute('aria-labelledby', 'tab-' + i);
+    panel.textContent = '';
+    panel.appendChild(el('div', { class: 'job-head' }, [
+      el('div', null, [el('h3', { text: j.role }), el('div', { class: 'where', text: j.company + ' · ' + j.place })]),
+      el('span', { class: 'badge', text: j.dates })
+    ]));
+    panel.appendChild(el('ul', { class: 'points' }, j.points.map(function (p) { return el('li', { text: p }); })));
+    panel.appendChild(el('div', { class: 'tags' }, j.tags.map(function (t) { return el('span', { class: 'tag', text: t }); })));
+    restart(panel, 'swap');
+  }
+  pickJob(0);
+
+  // ===== SKILLS =====
+  var filtersEl = document.getElementById('filters');
+  var groupsEl = document.getElementById('groups');
+  var filterDefs = [{ id: 'all', label: 'all' }].concat(GROUPS.map(function (g) { return { id: g.id, label: g.label.toLowerCase() }; }));
+  var filterBtns = filterDefs.map(function (f) {
+    var b = el('button', { type: 'button', class: 'filter', 'aria-pressed': 'false', text: f.label });
+    b.addEventListener('click', function () { pickFilter(f.id); });
+    filtersEl.appendChild(b);
+    return b;
+  });
+  function pickFilter(id) {
+    filterBtns.forEach(function (b, i) { b.setAttribute('aria-pressed', String(filterDefs[i].id === id)); });
+    groupsEl.textContent = '';
+    GROUPS.filter(function (g) { return id === 'all' || g.id === id; }).forEach(function (g) {
+      groupsEl.appendChild(el('div', { class: 'card group swap' }, [
+        el('span', { class: 'label', text: g.label }),
+        el('div', { class: 'items' }, g.items.map(function (s) { return el('span', { text: s }); }))
+      ]));
+    });
+  }
+  pickFilter('all');
+
+  // ===== SCROLL REVEAL =====
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(function (r) { io.observe(r); });
+  } else {
+    reveals.forEach(function (r) { r.classList.add('in'); });
+  }
 })();
 </script>
 </body>
